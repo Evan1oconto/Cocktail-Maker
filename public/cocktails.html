@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Cocktail Maker
+	</title>
+
+	<link rel="stylesheet" type="text/css" href="cocktails.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+	<div id="navBar">
+
+		<!-- logo -->
+		<span id="logo">
+			<a href="home.html"> <img src="Cocktail_Maker.svg" height="100%"></a>
+		</span>
+
+		<span id="links">
+			<!-- About -->
+			<span class="navBox">
+				<a href="about2.html"> About </a>
+			</span>
+
+			<!-- Find Cocktails -->
+			<span class="navBox">
+				<a href="cocktails.html"> Find Cocktails </a>
+			</span>
+		</span>
+
+	</div>
+
+	<div id="formBackground">
+		<div id="form">
+			<h1>Find your next cocktail:</h1>
+
+			<form>
+
+				<p> 
+					<span class="radio">
+						<input class="radio" type="radio"  name="recipe/cocktail" value="cocktail" id="cocktail" checked="checked" onclick="checkCorI()"/><span>Look up cocktails</span>
+					</span>
+					<span class="radio">
+						<input class="radio" type="radio"  name="recipe/cocktail" value="ingredients" id="ingredients" onclick="checkCorI()"/><span>Look up ingredients</span>
+					</span>
+				</p>
+
+				<p class="onlyIfCocktail">
+					<span>Your cocktail's name:</span><input type="text"  name="searchInput" id="cocktail_name" size="28" placeholder="'mojito', or 'margarita' for example"/>
+				</p>
+
+				<p class="onlyIfIngredients">
+					<span>Your ingredients:</span><input type="text"  id= "all_ingredients" name="searchInput" size="22" placeholder="'rum', or 'mint' for example"/>
+				</p>
+
+
+				<p>
+					<input class="button" type='button' value="Search" onclick="fetchData()">
+				</p>
+
+			</form>
+		</div>
+	</div>
+
+	<div id="results">
+		
+	</div>
+
+	<script language="javascript">
+
+		$(document).ready(function() {
+    		$(".onlyIfIngredients").hide();
+		});
+
+		function checkCorI() {
+			$(document).ready(function() {
+
+				if (document.getElementById("cocktail").checked) {
+					document.getElementById("all_ingredients").value = "";
+					$(".onlyIfIngredients").hide();
+					$(".onlyIfCocktail").show();
+				}
+
+				else {
+					document.getElementById("cocktail_name").value = "";
+					$(".onlyIfCocktail").hide();
+					$(".onlyIfIngredients").show();
+				}
+			})
+		}
+		const cocktail_http = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+		const ingredient_http = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?";
+		function fetchData() {
+			
+			var ingredients = document.getElementById('all_ingredients').value
+			var cocktailName = document.getElementById('cocktail_name').value
+			if(ingredients == "")
+				fetchCocktailByName(cocktailName);
+			else
+				setUpCocktailIngredients(ingredients);
+		}
+		function setUpCocktailIngredients(ingredients_string)
+		{
+			var ingredient_array = ingredients_string.split(", ");
+			api_drink_request = "";
+			for (var i = 0; i < ingredient_array.length; i++)
+			{
+				if(ingredient_array[i] != "") {
+					api_drink_request += "i=" + ingredient_array[i]
+					if(i != ingredient_array.length - 1)
+						api_drink_request += "&";
+				}
+
+			}
+			var full_ingredient_request = ingredient_http + api_drink_request;
+			
+			fetchCocktailByIngredient(full_ingredient_request);
+		}
+
+		function fetchCocktailByIngredient(api_request)
+		{
+			fetch(api_request)
+			.then(function(response) {
+				return response.json();
+			})
+			 .then(function(json) {
+				var string = JSON.stringify(json);
+        		var read_in = JSON.parse(string);
+        		read_in.drinks.forEach(drink => {
+					fetchCocktailByName(drink.strDrink);
+				});
+			});
+		}
+
+		function fetchCocktailByName(cocktailName)
+		{
+			const elements = document.getElementsByClassName("Results");
+    		while(elements.length > 0){
+        		elements[0].parentNode.removeChild(elements[0]);
+    		}
+
+			var fetch_query = cocktail_http + cocktailName
+			fetch(fetch_query)
+    		.then(function(response) {
+        		return response.json();
+    		})
+			.then(function(json) {
+				var string = JSON.stringify(json);
+				var read_in = JSON.parse(string);
+        		var search_q = "";
+        		read_in.drinks.forEach(drink => {
+					var drink_div = document.createElement("div");
+					var drink_name = document.createElement("p");
+					var new_div = document.createElement("div");
+					var text_div = document.createElement("div");
+					var overlay_div = document.createElement("div");
+					var ingdts_and_msrmts = document.createElement("div");
+					
+					ingdts_and_msrmts.className = "displayed_ingredients";
+
+					overlay_div.className = "overlay";
+					new_div.className = "Image_response";
+					text_div.className = "text_overlay";
+					drink_div.className = "Results";
+					drink_name.className = "drink_name";
+					
+					text_div.innerHTML = drink.strInstructions;
+					drink_name.innerHTML = drink.strDrink;
+
+					var new_img = document.createElement("img");
+					new_img.className = "image";
+					
+					//new_div.appendChild(drink_name);
+
+					addIngrdts(ingdts_and_msrmts, drink);
+					new_img.src = drink.strDrinkThumb;
+					
+					new_div.appendChild(new_img);
+
+					overlay_div.appendChild(drink_name);
+
+					overlay_div.appendChild(ingdts_and_msrmts);
+					overlay_div.appendChild(text_div);
+					new_div.appendChild(overlay_div);
+
+
+					drink_div.appendChild(new_div);
+					document.body.appendChild(drink_div);
+
+        		});
+			});
+		}
+
+		function addIngrdts(to_append, drink)
+		{
+			if(drink.strIngredient1 != null && drink.strIngredient1 != "")
+			{
+				to_append.innerHTML+= "• ";
+				if(drink.strMeasure1 != null)
+					to_append.innerHTML+= drink.strMeasure1 + " ";
+				to_append.innerHTML += drink.strIngredient1 + "<br>"; 
+			}
+			if(drink.strIngredient2 != null && drink.strIngredient2 != "")
+			{
+				to_append.innerHTML+= "• ";
+				if(drink.strMeasure2 != null)
+					to_append.innerHTML+= drink.strMeasure2 + " ";
+				to_append.innerHTML += drink.strIngredient2 + "<br>"; 
+			}
+			if(drink.strIngredient3 != null && drink.strIngredient3 != "")
+			{
+				to_append.innerHTML+= "• ";
+				if(drink.strMeasure3 != null)
+					to_append.innerHTML+= drink.strMeasure3 + " ";
+				to_append.innerHTML += drink.strIngredient3 + "<br>"; 
+			}
+			if(drink.strIngredient4 != null && drink.strIngredient4 != "")
+			{
+				to_append.innerHTML+= "• ";
+				if(drink.strMeasure4 != null)
+					to_append.innerHTML+= drink.strMeasure4 + " ";
+				to_append.innerHTML += drink.strIngredient4 + "<br>"; 
+			}
+			if(drink.strIngredient5 != null && drink.strIngredient5 != "")
+			{
+				to_append.innerHTML+= "• ";
+				if(drink.strMeasure5 != null)
+					to_append.innerHTML+= drink.strMeasure5 + " ";
+				to_append.innerHTML += drink.strIngredient5 + "<br>"; 
+			}
+			if(drink.strIngredient6 != null && drink.strIngredient6 != "")
+			{
+				to_append.innerHTML+= "• ";
+				if(drink.strMeasure6 != null)
+					to_append.innerHTML+= drink.strMeasure6 + " ";
+				to_append.innerHTML += drink.strIngredient6 + "<br>"; 
+			}
+			if(drink.strIngredient7 != null && drink.strIngredient7 != "")
+			{
+				to_append.innerHTML+= "• ";
+				if(drink.strMeasure7 != null)
+					to_append.innerHTML+= drink.strMeasure7 + " ";
+				to_append.innerHTML += drink.strIngredient7 + "<br>"; 
+			}
+		}
+	</script>
+</body>
+</html>
+
+
+

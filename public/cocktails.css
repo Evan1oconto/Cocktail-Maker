@@ -1,0 +1,304 @@
+body {
+	height: 100%;
+	margin: 0px;
+	font-family: "Jura";
+	color: #11CEF8;
+	background-color: #161516;
+}
+
+#navBar {
+	top: 0px;
+	position: fixed;
+	display: flex;
+	width: 100%;
+	height: 12%;
+	min-height: 60px;
+	background: rgba(0, 0, 0, 0.6);
+	z-index: 10;
+}
+
+#links {
+	flex: 90%;
+	display: flex;
+	justify-content: flex-end;
+	vertical-align: middle;
+}
+
+#logo {
+	vertical-align: middle;
+	position: relative;
+	height: 28%;
+	flex: 10%;
+	padding: 2.4%;
+}
+
+.navBox {
+	padding: 3%;
+	margin-right: 5%;
+	font-size: calc(16px + 0.6vw)
+}
+
+a {
+	text-decoration: none;
+	color: #11CEF8;
+}
+
+a:hover {
+	color: #f7e56f;
+}
+
+#formBackground {
+	padding: 40px;
+	text-align: center;
+	background-image: url('cocktail_bar.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: top center;
+}
+
+#form {
+	padding: 4% 2%;
+	margin: 12% 24%;
+	margin-bottom: 12%;
+	background: rgba(0, 0, 0, 0.73);
+}
+
+p {
+	margin: 30px;
+	font-size: 1.6vw;
+}
+
+input {
+	margin: 8px;
+}
+
+.radio {
+	margin: 10px;
+}
+
+h1 {
+	margin-bottom: 60px;
+}
+
+.button {
+	font-family: "Jura";
+	font-weight: 600;
+	margin-top: 14px;
+	padding: 4px 16px;
+	background-color: #11CEF8;
+	border: outset;
+	border-width: 1px;
+
+}
+
+.button:hover {
+	font-family: "Jura";
+	font-weight: 600;
+	margin-top: 14px;
+	padding: 4px 16px;
+	background-color: #11CEF8;
+	border: inset;
+	border-width: 1px;
+}
+
+.radio {
+	height: 18px;
+	width: 18px;
+
+}
+
+.radio:checked {
+	height: 18px;
+	width: 18px;
+}
+
+.Image_response {
+	position: relative;
+	width: 43%; 
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 50px;
+  }
+
+
+.overlay {
+	position: absolute;
+	top: 50px;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: auto;
+	width: 75vh;
+	opacity: 0;
+	transition: .5s ease;
+	background-color: #353535;
+  }
+  
+.image {
+	text-align: center;
+	display: block;
+	width: 75vh;
+	height: auto;
+	margin-bottom: 50px;
+  }
+
+.text_overlay {
+	color: rgb(255, 255, 255);
+	font-size: 1.5vw;
+	width: 60%;
+	height: auto;
+	position: absolute;
+	top: 75%;
+	left: 60%;
+	-webkit-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	text-align: center;
+  }
+
+
+.drink_name {
+	text-align: center;
+	font-size: 4vw;
+  }
+
+
+.ingredients {
+	text-align: left;
+	font-size: 16px;
+  }
+
+
+.Image_response:hover .overlay {
+	opacity: 0.8;
+  } 
+
+.displayed_ingredients {
+	font-size: 2vw;
+	margin-left: 2%;
+}
+
+
+
+@media only screen and (max-width: 1000px) {
+
+	#navBar {
+		height: 6%;
+	}
+
+	#logo {
+		padding-top: 2.4vw;
+	}
+
+	.navBox {
+		font-size: calc(10px + 1.6vw);
+		padding-top: 2.4vw;
+	}
+
+
+	#formBackground {
+		background-image: url('phone_bar.jpg');
+	}
+
+	#form {
+		padding: 8% 0%;
+		margin: 56% 14%;
+		margin-bottom: 82%;
+	}
+
+	h1 {
+		font-size: 4vw;
+	}
+
+	span {
+		font-size: 2.4vw;
+	}
+
+	p {
+		margin: 7% 2%;
+		font-size: 2.6vw;
+	}
+
+	.button {
+		font-size: 2vw;
+		margin-top: 3%;
+		padding: 10px 40px;
+		border-width: 2px;
+
+	}
+
+	.button:hover {
+		font-size: 2vw;
+		margin-top: 3%;
+		padding: 10px 40px;
+		border-width: 2px;
+	}
+
+	.Image_response {
+		position: relative;
+		width: 62.2%; 
+		display: block;
+		margin-left: 20%;
+		margin-right: 20%;
+		padding-top: 50px;
+	}
+
+
+	.overlay {
+		position: absolute;
+		top: 50px;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		height: auto;
+		width: 100%;
+		opacity: 0;
+		transition: .5s ease;
+		background-color: #353535;
+	}
+	  
+	.image {
+		display: block;
+		width: 35vh;
+		height: auto;
+		margin-bottom: 50px;
+	}
+
+	.text_overlay {
+		color: rgb(255, 255, 255);
+		font-size: 2.4vw;
+		width: 70%;
+		height: auto;
+		position: absolute;
+		top: 75%;
+		left: 58%;
+		-webkit-transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		transform: translate(-50%, -50%);
+		text-align: center;
+	}
+
+
+	.drink_name {
+		text-align: center;
+		font-size: 4vw;
+	}
+
+
+	.ingredients {
+		text-align: left;
+		font-size: 2vw;
+	}
+
+
+	.Image_response:hover .overlay {
+		opacity: 0.8;
+	} 
+
+	.displayed_ingredients {
+		font-size: 3vw;
+		margin-left: 2%;
+	}
+}
+

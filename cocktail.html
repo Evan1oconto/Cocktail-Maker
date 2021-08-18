@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Test for API use</title>
+        <style>
+            input[name=ingredient1] {
+                color:blueviolet;
+            }
+        </style>
+        <script src="frontend/apirequest.js">
+            
+
+
+        </script>
+    </head>
+    <body>
+        
+      <form 
+      name="ingredient" 
+      id="ingredient"
+      >
+      <input type="hidden" name="query_string" id="fetch_request">
+          <div id="ingredients">
+              <input type="text" name="ingredient1">
+              <br>
+          </div> 
+          <input type="button" value="Search cocktail!" onclick="apiFetch()">
+      </form> 
+      <button onclick="add_ingredient()">+</button>
+      <script>
+          
+        http_path = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?";
+        
+        function add_ingredient()
+        {
+            document.getElementById('ingredients').innerHTML += "<input type='text' name='ingredient1'><br>";   
+        }
+
+        // function apiFetch()
+        // {
+        //     var query_to_send = "";
+        //     arr_ingredients = document.getElementsByName("ingredient1");
+        //     for(var i = 0; i < arr_ingredients.length; i++)
+        //     {
+        //         if (arr_ingredients[i] != "")
+        //             query_to_send += "i=" + arr_ingredients[i].value
+        //         if(i != arr_ingredients.length - 1)
+        //             query_to_send += "&";    
+        //     }
+
+        //     var full_query = http_path + query_to_send;
+        //     document.getElementById('fetch_request').value = full_query;
+        //     console.log("hello")
+        //     fetchInfo(full_query)
+        // }
+
+
+       
+    </script> 
+    </body>
+</html>

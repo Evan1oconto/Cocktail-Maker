@@ -1,0 +1,80 @@
+body {
+	height: 100%;
+	margin: 0px;
+	font-family: "Jura";
+	color: #11CEF8;
+	background-image: url('blue_cocktail.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+#navBar {
+	top: 0px;
+	position: fixed;
+	display: flex;
+	width: 100%;
+	height: 12%;
+	min-height: 60px;
+	background: rgba(0, 0, 0, 0.6);
+}
+
+#links {
+	flex: 90%;
+	display: flex;
+	justify-content: flex-end;
+	vertical-align: middle;
+}
+
+#logo {
+	vertical-align: middle;
+	position: relative;
+	height: 28%;
+	flex: 10%;
+	padding: 2.4%
+}
+
+.navBox {
+	padding: 3%;
+	margin-right: 5%;
+	font-size: calc(16px + 0.6vw);
+}
+
+a {
+	text-decoration: none;
+	color: #11CEF8;
+}
+
+a:hover {
+	color: #f7e56f;
+}
+
+#titleText {
+	margin: 34% 12%;
+	width: 36%;
+}
+
+@media only screen and (max-width: 1000px) {
+
+	#navBar {
+		height: 6%;
+	}
+
+	#logo {
+		padding-top: 3.8%
+	}
+
+	.navBox {
+		font-size: calc(10px + 1.6vw);
+		padding-top: 3vw;
+	}
+
+
+	body {
+		background-image: url('phone_cocktail.jpg');
+	}
+
+	#titleText {
+		margin: 68% 8%;
+		width: 36%;
+	}
+}
